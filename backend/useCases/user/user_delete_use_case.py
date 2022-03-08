@@ -5,10 +5,11 @@ from backend.helpers.user_exists import user_exists
 from backend.helpers.user_is_authorized import user_is_authorized
 
 
-from backend.repositories.mongo.UserRepository import UserRepository
+from backend.repositories.mongo.user_repository import UserRepository
 from backend.requests.user.user_delete_request import UserDeleteRequest
 
 
+logger = logging.getLogger(__name__)
 
 from backend.response import (
     ResponseFailure,
@@ -36,7 +37,7 @@ def user_delete_use_case(repo: UserRepository, request: UserDeleteRequest) -> Re
 
     try:
 
-        if not user_is_authorized(id=request.current_id, repo=repo):
+        if not user_is_authorized(id=request.current_id):
             return ResponseFailure(401, "Unauthorized")
 
         if not user_exists(id=request.user.id, repo=repo):
@@ -47,5 +48,5 @@ def user_delete_use_case(repo: UserRepository, request: UserDeleteRequest) -> Re
         return ResponseSuccess(user)
 
     except Exception as err:
-        logging.warning(Fore.RED + str(err))
+        logger.warning(Fore.RED + str(err))
         return ResponseFailure(code=500, message=err)

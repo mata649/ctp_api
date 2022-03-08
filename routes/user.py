@@ -1,6 +1,5 @@
 # FastApi
 from typing import List
-from urllib import request
 from fastapi import APIRouter, Body, Path, Query, HTTPException, Depends
 
 # Auth
@@ -23,10 +22,10 @@ from backend.useCases.user.user_create_use_case import user_create_use_case
 from backend.useCases.user.user_delete_use_case import user_delete_use_case
 from backend.useCases.user.user_find_use_case import user_find_use_case
 from backend.useCases.user.user_login_use_case import user_login_use_case
+from backend.useCases.user.user_update_use_case import user_update_use_case
 
 # Entities
 from backend.entities.user import User
-from backend.useCases.user.user_update_use_case import user_update_use_case
 
 # Schemas
 from schemas.user import UserChangePasswordIn, UserChangePasswordOut, UserIn, UserLoginIn, UserLoginOut, UserOut, UserUpdateIn, UserUpdateOut
@@ -114,7 +113,7 @@ def get_users(
     filters = {key: value for (
         key, value) in filters.items() if value is not None}
 
-    if not user_is_authorized(id=current_id, repo=userRepo):
+    if not user_is_authorized(id=current_id):
         raise HTTPException(401, "Unauthorized")
 
     request_object = build_user_find_request(filters)

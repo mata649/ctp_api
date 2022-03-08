@@ -9,7 +9,7 @@ class News:
     text: str = None
     user_id: str = None
     published: datetime = None
-    enable: bool = False
+    enable: bool = True
 
     @classmethod
     def from_dict(cls, dict):

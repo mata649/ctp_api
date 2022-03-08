@@ -17,6 +17,7 @@ def is_valid_password(password: str) -> bool:
     --------------------------------------------------------
     Validates that the string have 8 characters min, 64 max, a uppercase, 
     a lowercase and a digit.
+    ---------------------------------------------------------
     Args:
         password (str): A string to validate if meets the requirements of the schema.
 

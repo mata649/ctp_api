@@ -11,7 +11,7 @@ class Specialty:
     description: str = None
     recommended_skills: List[str] = None
     color: str = None
-    enable: bool = False
+    enable: bool = True
 
     @classmethod
     def from_dict(cls, dict):

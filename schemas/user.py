@@ -1,4 +1,4 @@
-from cgitb import enable
+
 from enum import Enum
 from typing import Optional
 from pydantic import BaseModel, Field, EmailStr
@@ -15,7 +15,7 @@ class UserBase(BaseModel):
     email: EmailStr = Field(...)
     full_name: str = Field(..., max_length=80)
     role: Role = Field(...)
-    enable: bool = Field(default=True)
+
 
 
 

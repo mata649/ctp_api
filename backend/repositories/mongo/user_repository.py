@@ -1,5 +1,3 @@
-from cgitb import enable
-from urllib import request
 from backend.repositories.mongo.mongo_repo import MongoRepo
 from bson.objectid import ObjectId
 from backend.entities.user import User
@@ -27,8 +25,9 @@ class UserRepository(MongoRepo):
                 filters["_id"] = ObjectId(filters["id"])
                 del filters["id"]
             user = self.db.users.find_one({**filters, 'enable': True},)
-        if user:
-            return self._create_user_entity(user)
+            
+            if user:
+                return self._create_user_entity(user)
         return None
 
     def create_user(self, user: User) -> User:

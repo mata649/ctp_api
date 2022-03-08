@@ -5,7 +5,7 @@ from colorama import Fore
 from backend.helpers.encrypt_password import encrypt_password
 from backend.helpers.user_is_authorized import user_is_authorized
 
-from backend.repositories.mongo.UserRepository import UserRepository
+from backend.repositories.mongo.user_repository import UserRepository
 from backend.requests.request import InvalidRequest
 from backend.requests.user.user_create_request import UserCreateRequest
 
@@ -14,6 +14,8 @@ from backend.requests.user.user_find_request import build_user_find_request
 
 # UseCases
 from backend.useCases.user.user_find_use_case import user_find_use_case
+
+logger = logging.getLogger(__name__)
 
 from backend.response import (
     ResponseFailure,
@@ -44,7 +46,7 @@ def user_create_use_case(repo: UserRepository, request: UserCreateRequest | Inva
 
     try:
         
-        if not user_is_authorized(id=request.current_id, repo=repo):
+        if not user_is_authorized(id=request.current_id):
             return ResponseFailure(401, "Unauthorized")
         
         req_user_by_email = build_user_find_request(
@@ -63,5 +65,5 @@ def user_create_use_case(repo: UserRepository, request: UserCreateRequest | Inva
         return ResponseFailure(409, "The email is already taken")
 
     except Exception as err:
-        logging.warning(Fore.RED + str(err))
+        logger.warning(Fore.RED + str(err))
         return ResponseFailure(code=500, message=err)

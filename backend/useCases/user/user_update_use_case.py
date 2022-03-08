@@ -5,15 +5,18 @@ from backend.helpers.user_exists import user_exists
 from backend.helpers.user_is_authorized import user_is_authorized
 
 
-from backend.repositories.mongo.UserRepository import UserRepository
+from backend.repositories.mongo.user_repository import UserRepository
 from backend.requests.user.user_update_request import UserUpdateRequest
-
 
 # Request
 from backend.requests.user.user_find_request import build_user_find_request
 
 # UseCases
 from backend.useCases.user.user_find_use_case import user_find_use_case
+
+
+
+logger = logging.getLogger(__name__)
 
 from backend.response import (
     ResponseFailure,
@@ -41,7 +44,7 @@ def user_update_use_case(repo: UserRepository, request: UserUpdateRequest) -> Re
 
     try:
 
-        if not user_is_authorized(id=request.current_id, repo=repo):
+        if not user_is_authorized(id=request.current_id):
             return ResponseFailure(401, "Unauthorized")
 
         if not user_exists(id=request.user.id, repo=repo):
@@ -60,5 +63,5 @@ def user_update_use_case(repo: UserRepository, request: UserUpdateRequest) -> Re
         return ResponseFailure(409, "The email is already taken")
 
     except Exception as err:
-        logging.warning(Fore.RED + str(err))
+        logger.warning(Fore.RED + str(err))
         return ResponseFailure(code=500, message=err)

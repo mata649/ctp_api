@@ -1,15 +1,14 @@
 import logging
 # External Libs
 from colorama import Fore
-from backend.entities.roles import Roles
 from backend.helpers.encrypt_password import encrypt_password
 from backend.helpers.user_exists import user_exists
 from backend.helpers.user_is_authorized import user_is_authorized
 
-from backend.repositories.mongo.UserRepository import UserRepository
+from backend.repositories.mongo.user_repository import UserRepository
 from backend.requests.user.user_change_password_request import UserChangePasswordRequest
 
-
+logger = logging.getLogger(__name__)
 
 from backend.response import (
     ResponseFailure,
@@ -37,7 +36,7 @@ def user_change_password_use_case(repo: UserRepository, request: UserChangePassw
         return build_response_from_invalid_request(request)
 
     try:
-        if not user_is_authorized(id=request.current_id, repo=repo):
+        if not user_is_authorized(id=request.current_id):
             return ResponseFailure(401, "Unauthorized")
         
         if not user_exists(id =request.user.id, repo=repo):
@@ -51,5 +50,5 @@ def user_change_password_use_case(repo: UserRepository, request: UserChangePassw
         return ResponseFailure(409, "The email is already taken")
 
     except Exception as err:
-        logging.warning(Fore.RED + str(err))
+        logger.warning(Fore.RED + str(err))
         return ResponseFailure(code=500, message=err)

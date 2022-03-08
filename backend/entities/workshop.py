@@ -9,7 +9,8 @@ class Workshop:
     images: List[str] = None
     description: str = None
     color: str = None
-    enable: bool = False
+    enable: bool = True
+    
     @classmethod
     def from_dict(cls, dict):
         return cls(**dict)

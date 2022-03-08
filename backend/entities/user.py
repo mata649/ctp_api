@@ -8,7 +8,7 @@ class User:
     full_name: str = None
     password: str = None
     role: Roles = 'EDITOR'
-    enable: bool = None
+    enable: bool = True
 
     @classmethod
     def from_dict(cls, dict):

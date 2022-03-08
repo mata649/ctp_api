@@ -1,4 +1,4 @@
-from backend.repositories.mongo.UserRepository import UserRepository
+from backend.repositories.mongo.user_repository import UserRepository
 from backend.requests.user.user_find_request import build_user_find_request
 from backend.useCases.user.user_find_use_case import user_find_use_case
 

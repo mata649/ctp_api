@@ -1,9 +1,12 @@
 
+import imp
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 #Routes
 from routes.user import user
+from routes.specialty import specialty
+from routes.workshop import workshop
 
 app = FastAPI()
 
@@ -20,3 +23,5 @@ app.add_middleware(
 )
 
 app.include_router(user)
+app.include_router(specialty)
+app.include_router(workshop)

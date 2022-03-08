@@ -3,12 +3,16 @@ from colorama import Fore
 import bcrypt
 from backend.entities.user import User
 
-from backend.repositories.mongo.UserRepository import UserRepository
+from backend.repositories.mongo.user_repository import UserRepository
 
 from backend.requests.user.user_login_request import UserLoginRequest
 from backend.requests.user.user_find_request import  build_user_find_request
 from backend.useCases.user.user_find_use_case import user_find_use_case
 
+
+
+
+logger = logging.getLogger(__name__)
 
 from backend.response import (
     ResponseFailure,
@@ -63,5 +67,5 @@ def user_login_use_case(repo: UserRepository, request: UserLoginRequest) -> Resp
         return ResponseSuccess(user)
 
     except Exception as err:
-        logging.warning(Fore.RED + str(err))
+        logger.warning(Fore.RED + str(err))
         return ResponseFailure(code=500, message="Server Error")
