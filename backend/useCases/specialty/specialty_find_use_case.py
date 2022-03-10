@@ -1,6 +1,5 @@
 import logging
 from colorama import Fore
-from backend.entities.user import User
 from backend.repositories.mongo.specialty_repository import SpecialtyRepository
 from backend.requests.specialty.specialty_find_request import SpecialtyFindRequest
 

@@ -27,7 +27,7 @@ def specialty_update_use_case(repo: SpecialtyRepository, request: SpecialtyUpdat
         request (SpecialtyUpdateRequest): An instance of SpecialtyUpdateRequest with the specialty information.
 
     Returns:
-        ResponseFailure | ResponseSuccess: Return a ResponseSuccess if the workshop of the specialty was 
+        ResponseFailure | ResponseSuccess: Return a ResponseSuccess if the update of the specialty was 
         successful, else return a ResponseFailure
     """
     if not request:
@@ -35,9 +35,6 @@ def specialty_update_use_case(repo: SpecialtyRepository, request: SpecialtyUpdat
 
     try:
      
-        
-        if not user_is_authorized(id=request.current_id):
-            return ResponseFailure(401, "Unauthorized")
 
         specialty = request.specialty
         if not specialty_exists(specialty.id, repo):

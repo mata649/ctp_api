@@ -7,7 +7,6 @@ class News:
     id: str = None
     title: str = None
     text: str = None
-    user_id: str = None
     published: datetime = None
     enable: bool = True
 
@@ -20,7 +19,6 @@ class News:
             'id': self.id,
             'title': self.title,
             'text': self.text,
-            'user_id': self.user_id,
             'published': self.published,
             'enable': self.enable
         }
