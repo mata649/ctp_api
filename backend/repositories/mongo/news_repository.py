@@ -57,3 +57,15 @@ class NewsRepository(MongoRepo):
         )
 
         return self._create_news_entity(specialty_updated)
+
+    def delete_news(self, news: News) -> News:
+        id_to_search = ObjectId(news.id)
+        news_deleted = self.db.news.find_one_and_update(
+            filter={'_id': id_to_search},
+            update={
+                '$set': {
+                    'enable': False
+                }
+            }, upsert=False, return_document=ReturnDocument.AFTER
+        )
+        return self._create_news_entity(news_deleted)

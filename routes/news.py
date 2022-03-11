@@ -12,11 +12,13 @@ from auth.jwt import JWTHandler
 
 # Requests
 from backend.requests.news.news_create_request import build_news_create_request
+from backend.requests.news.news_delete_request import build_news_delete_request
 from backend.requests.news.news_find_request import build_news_find_request
 from backend.requests.news.news_update_request import build_news_update_request
 
 # UseCases
 from backend.useCases.news.news_create_use_case import news_create_use_case
+from backend.useCases.news.news_delete_use_case import news_delete_use_case
 from backend.useCases.news.news_find_use_case import news_find_use_case
 from backend.useCases.news.news_update_use_case import news_update_use_case
 
@@ -71,10 +73,10 @@ def find_news(id: str = Query(default=None), title: str = Query(default=None)):
 
 
 @news.delete('/{news_id}', response_model=NewsOut)
-def find_news(news_id: str = Path(...), current_id=Depends(jwt_handler.auth_wrapper)):
+def delete_news(news_id: str = Path(...), current_id=Depends(jwt_handler.auth_wrapper)):
     news = News(id=news_id)
-    request_object = build_news_find_request(filters=filters)
-    response = news_find_use_case(newsRepo, request_object)
+    request_object = build_news_delete_request(news,current_id)
+    response = news_delete_use_case(newsRepo, request_object)
     if response:
         return response.value
 
