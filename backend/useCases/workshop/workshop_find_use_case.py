@@ -9,7 +9,7 @@ from backend.response import (
     ResponseSuccess,
     build_response_from_invalid_request
 )
-
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 def workshop_find_use_case(repo: WorkshopRepository, request: WorkshopFindRequest) -> ResponseFailure | ResponseSuccess:

@@ -4,7 +4,7 @@ from backend.entities.user import User
 from backend.repositories.mongo.user_repository import UserRepository
 from backend.requests.user.user_find_request import UserFindRequest
 
-
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 from backend.response import (

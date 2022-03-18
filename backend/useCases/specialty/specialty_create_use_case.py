@@ -5,7 +5,7 @@ from backend.helpers.user_is_authorized import user_is_authorized
 from backend.repositories.mongo.specialty_repository import SpecialtyRepository
 from backend.requests.specialty.specialty_create_request import SpecialtyCreateRequest
 from backend.requests.request import InvalidRequest
-
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 from backend.response import (

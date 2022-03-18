@@ -7,7 +7,7 @@ from backend.helpers.user_is_authorized import user_is_authorized
 from backend.repositories.mongo.news_repository import NewsRepository
 from backend.requests.news.news_create_request import NewsCreateRequest
 from backend.requests.request import InvalidRequest
-
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 from backend.response import (

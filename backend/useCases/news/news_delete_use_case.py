@@ -8,7 +8,7 @@ from backend.helpers.user_is_authorized import user_is_authorized
 from backend.repositories.mongo.news_repository import NewsRepository
 from backend.requests.news.news_delete_request import NewsDeleteRequest
 
-
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 from backend.response import (

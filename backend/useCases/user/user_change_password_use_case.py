@@ -7,7 +7,7 @@ from backend.helpers.user_is_authorized import user_is_authorized
 
 from backend.repositories.mongo.user_repository import UserRepository
 from backend.requests.user.user_change_password_request import UserChangePasswordRequest
-
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 from backend.response import (

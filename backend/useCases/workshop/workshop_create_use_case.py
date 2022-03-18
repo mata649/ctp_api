@@ -5,7 +5,7 @@ from backend.helpers.user_is_authorized import user_is_authorized
 from backend.repositories.mongo.workshop_repository import WorkshopRepository
 from backend.requests.workshop.workshop_create_request import WorkshopCreateRequest
 from backend.requests.request import InvalidRequest
-
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 from backend.response import (

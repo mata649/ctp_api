@@ -15,7 +15,7 @@ from backend.requests.user.user_find_request import build_user_find_request
 from backend.useCases.user.user_find_use_case import user_find_use_case
 
 
-
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 from backend.response import (

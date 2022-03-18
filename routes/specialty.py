@@ -32,7 +32,9 @@ jwt_handler = JWTHandler()
 
 
 @specialty.post('/', response_model=SpecialtyOut)
-def create_specialty(specialty_in: SpecialtyIn = Body(...), current_id=Depends(jwt_handler.auth_wrapper)):
+def create_specialty(
+        specialty_in: SpecialtyIn = Body(...),
+        current_id=Depends(jwt_handler.auth_wrapper)):
     specialty = Specialty.from_dict(specialty_in.dict())
     request_object = build_specialty_create_request(
         specialty=specialty, current_id=current_id)
@@ -67,7 +69,7 @@ def find_specialty(id: str = Query(default=None), title: str = Query(default=Non
 def update_speciality(specialty_in: SpecialtyIn = Body(...), id_specialty: str = Path(...), current_id=Depends(jwt_handler.auth_wrapper)):
     specialty = Specialty.from_dict(specialty_in.dict())
     specialty.id = id_specialty
-    request_object = build_specialty_update_request(specialty,current_id)
+    request_object = build_specialty_update_request(specialty, current_id)
     response = specialty_update_use_case(
         repo=specialtyRepo, request=request_object)
 
@@ -75,11 +77,12 @@ def update_speciality(specialty_in: SpecialtyIn = Body(...), id_specialty: str =
         return response.value
     raise HTTPException(response.code, response.message)
 
+
 @specialty.delete('/{id_specialty}', response_model=SpecialtyOut)
-def update_speciality( id_specialty: str = Path(...), current_id=Depends(jwt_handler.auth_wrapper)):
+def update_speciality(id_specialty: str = Path(...), current_id=Depends(jwt_handler.auth_wrapper)):
     specialty = Specialty(id=id_specialty)
 
-    request_object = build_specialty_delete_request(specialty,current_id)
+    request_object = build_specialty_delete_request(specialty, current_id)
     response = specialty_delete_use_case(
         repo=specialtyRepo, request=request_object)
 

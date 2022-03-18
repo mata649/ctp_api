@@ -61,7 +61,7 @@ def create_user(
 
     user: User = User.from_dict(user_in.dict())
     request_object = build_user_create_request(user, current_id)
-    
+
     response = user_create_use_case(repo=userRepo, request=request_object)
     if response:
         return response.value
@@ -123,6 +123,15 @@ def get_users(
     raise HTTPException(response.code, detail=response.message)
 
 
+@user.get('/user_logged_info', response_model=UserOut)
+def get_user_logged_info(current_id=Depends(jwt_handler.auth_wrapper)):
+    request_object = build_user_find_request({'id': current_id})
+    response = user_find_use_case(userRepo, request_object)
+    if response:
+        return response.value
+    raise HTTPException(response.code, detail=response.message)
+
+
 @user.delete('/{user_id}', response_model=UserOut)
 def delete_user(user_id: str = Path(...), current_id=Depends(jwt_handler.auth_wrapper)):
     user = User(id=user_id)
@@ -131,5 +140,3 @@ def delete_user(user_id: str = Path(...), current_id=Depends(jwt_handler.auth_wr
     if response:
         return response.value
     raise HTTPException(response.code, detail=response.message)
-
-

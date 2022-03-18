@@ -1,13 +1,13 @@
-
-import imp
+import uvicorn
+from routes.news import news
+from routes.workshop import workshop
+from routes.specialty import specialty
+from routes.user import user
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-#Routes
-from routes.user import user
-from routes.specialty import specialty
-from routes.workshop import workshop
-from routes.news import news
+
+# Routes
 
 app = FastAPI()
 
@@ -27,3 +27,6 @@ app.include_router(user)
 app.include_router(specialty)
 app.include_router(workshop)
 app.include_router(news)
+
+if __name__ == '__main__':
+    uvicorn.run("main:app", host="localhost", port=8000, log_level="info")
