@@ -29,10 +29,10 @@ def build_news_update_request(news: News, current_id: str) -> InvalidRequest | N
     if not current_id:
         invalid_request.add_error("current_id", "current_id is necessary")
 
-    if not news.title:
+    if not news.title.rstrip():
         invalid_request.add_error("title", "The title is necessary")
     
-    if not news.text:
+    if not news.text.rstrip():
         invalid_request.add_error("text", "The text is necessary")
 
     if not news.id:

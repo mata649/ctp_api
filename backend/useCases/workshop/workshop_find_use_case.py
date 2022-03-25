@@ -33,7 +33,7 @@ def workshop_find_use_case(repo: WorkshopRepository, request: WorkshopFindReques
         workshop = repo.find_workshop(request.filters)
         
         if not workshop:
-            return ResponseFailure(404, "Specialty doesn't exists")
+            return ResponseFailure(404, "Workshop doesn't exists")
 
         return ResponseSuccess(workshop)
 

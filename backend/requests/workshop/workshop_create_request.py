@@ -30,10 +30,10 @@ def build_workshop_create_request(workshop: Workshop, current_id: str) -> Invali
     if not current_id:
         invalid_request.add_error("current_id", "current_id is necessary")
 
-    if not workshop.title:
+    if not workshop.title.rstrip():
         invalid_request.add_error("title", "The title is necessary")
     
-    if not workshop.description:
+    if not workshop.description.rstrip():
         invalid_request.add_error("description", "The description is necessary")
     
     if not workshop.color:

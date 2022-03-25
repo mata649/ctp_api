@@ -35,9 +35,6 @@ def workshop_update_use_case(repo: WorkshopRepository, request: WorkshopUpdateRe
 
     try:
      
-        if not user_is_authorized(id=request.current_id):
-            return ResponseFailure(401, "Unauthorized")
-
         workshop = request.workshop
         if not workshop_exists(workshop.id, repo):
             return ResponseFailure(404, "Workshop doesn't exists")

@@ -1,8 +1,10 @@
+from email.mime import image
 import uvicorn
 from routes.news import news
 from routes.workshop import workshop
 from routes.specialty import specialty
 from routes.user import user
+from routes.image import image
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -24,6 +26,7 @@ app.add_middleware(
 )
 
 app.include_router(user)
+app.include_router(image)
 app.include_router(specialty)
 app.include_router(workshop)
 app.include_router(news)

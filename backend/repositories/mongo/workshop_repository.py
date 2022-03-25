@@ -1,3 +1,4 @@
+import re
 from backend.repositories.mongo.mongo_repo import MongoRepo
 from bson.objectid import ObjectId
 from typing import List
@@ -37,12 +38,17 @@ class WorkshopRepository(MongoRepo):
             if "id" in filters:
                 filters["_id"] = ObjectId(filters["id"])
                 del filters["id"]
-            workshop = self.db.workshops.find_one(
+            if "title" in filters:
+                filters["title"] = re.compile(
+                    f'.*{filters["title"]}.*', re.IGNORECASE)
+            workshops = self.db.workshops.find(
                     {**filters, 'enable': True},)
-
-            if workshop:
-                return self._create_workshop_entity(workshop)
-        return None
+            workshops = list(workshops)
+            if len(workshops) == 1:
+                return self._create_workshop_entity(workshops[0])
+            
+            return self._create_workshops_entity(workshops)
+       
 
     def update_workshop(self, workshop: Workshop) -> Workshop:
         id_to_search = ObjectId(workshop.id)

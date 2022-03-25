@@ -1,3 +1,4 @@
+import re
 from typing import List
 from bson import ObjectId
 from backend.repositories.mongo.mongo_repo import MongoRepo
@@ -33,17 +34,21 @@ class SpecialtyRepository(MongoRepo):
 
     def find_specialty(self, filters: dict = None) -> Specialty | List[Specialty]:
         if not filters:
-            specialties = self.db.specialties.find({'enable':True})
+            specialties = self.db.specialties.find({'enable': True})
             return self._create_specialties_entity(specialties)
         else:
             if "id" in filters:
                 filters["_id"] = ObjectId(filters["id"])
                 del filters["id"]
-            specialty = self.db.specialties.find_one(
+            if "title" in filters:
+                filters["title"] = re.compile(
+                    f'.*{filters["title"]}.*', re.IGNORECASE)
+            specialties = self.db.specialties.find(
                 {**filters, 'enable': True},)
-
-            if specialty:
-                return self._create_specialty_entity(specialty)
+            specialties = list(specialties)
+            if len(specialties) == 1:
+                return self._create_specialty_entity(specialties[0])
+            return self._create_specialties_entity(specialties)
         return None
 
     def update_specialty(self, specialty: Specialty) -> Specialty:

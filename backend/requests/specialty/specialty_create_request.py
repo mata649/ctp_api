@@ -29,10 +29,10 @@ def build_specialty_create_request(specialty: Specialty, current_id: str) -> Inv
     if not current_id:
         invalid_request.add_error("current_id", "current_id is necessary")
 
-    if not specialty.title:
+    if not specialty.title.rstrip():
         invalid_request.add_error("title", "The title is necessary")
     
-    if not specialty.description:
+    if not specialty.description.rstrip():
         invalid_request.add_error("description", "The description is necessary")
     
     if not specialty.color:
